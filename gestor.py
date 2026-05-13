@@ -1,37 +1,22 @@
-gestor_obj = gestor.GestorTareas("mongodb://127.0.0.1:27017/")
+from pymongo import MongoClient
 
-@app.route('/')
-def home():
-    return render_template('inicio.html')
+class GestorTareas:
+    def __init__(self, uri):
+        self.client = MongoClient(uri)
+        self.db = self.client['sistema_tareas']
+        self.usuarios = self.db['usuarios']
 
-@app.route('/creacuenta', methods=['GET', 'POST'])
-def creacuenta():
-    if request.method == 'POST':
-        u = request.form.get('user')
-        e = request.form.get('email')
-        s = request.form.get('secreto')
+    def crear_usuario(self, usuario, nombre_completo, password_encriptada):
+
+        if self.usuarios.find_one({"user": usuario}):
+            return False
         
-        password_encriptada = pbkdf2_sha256.hash(s)
+        self.usuarios.insert_one({
+            "user": usuario,
+            "nombre_completo": nombre_completo,
+            "secreto": password_encriptada
+        })
+        return True
 
-        if gestor_obj.crear_usuario(u, e, password_encriptada):
-            flash('¡Cuenta creada con éxito! Ahora puedes iniciar sesión.')
-            return redirect(url_for('iniciasesion'))
-        else:
-            flash('Este correo ya esta registrado.')
-            
-    return render_template('crearcuenta.html')
-
-@app.route('/iniciasesion', methods=['GET', 'POST'])
-def iniciasesion():
-    if request.method == 'POST':
-        e = request.form.get('email')
-        s = request.form.get('secreto') 
-        
-        user = gestor_obj.obtener_usuario_por_email(e)
-
-        if user and pbkdf2_sha256.verify(s, user['secreto']):
-            return redirect(url_for('tareas'))
-        else:
-            flash('datos incorrectos.')
-            
-    return render_template('iniciarsesion.html')
+    def obtener_usuario(self, usuario):
+        return self.usuarios.find_one({"user": usuario})
