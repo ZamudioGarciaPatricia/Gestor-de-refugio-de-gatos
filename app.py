@@ -3,7 +3,7 @@ import gestor
 from passlib.hash import pbkdf2_sha256
 
 app = Flask(__name__)
-app.secret_key = 'gatitolula'
+app.secret_key = 'gatitoss'
 
 gestor_obj = gestor.GestorTareas("mongodb://127.0.0.1:27017/")
 
@@ -26,7 +26,7 @@ def creacuenta():
         else:
             flash('Este usario ya fue registrado.')
             
-    return render_template('crearcuenta.html')
+    return render_template('login.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def iniciasesion():
@@ -41,7 +41,7 @@ def iniciasesion():
         else:
             flash('datos incorrectos.')
             
-    return render_template('iniciarsesion.html')
+    return render_template('exito.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
