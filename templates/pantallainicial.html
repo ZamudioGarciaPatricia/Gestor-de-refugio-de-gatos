@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %} login {% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <img src="/static/icon.jpg" 
+         alt="Logo" 
+         class="rounded-circle float-start border border-1"
+         width="120" 
+         height="120">
+
+    <div class="text-end">
+        <h1 class="display-2 fw-bold text-dark mb-1">RESCATA UNA VIDA HOY</h1>
+        
+        <p class="text-muted mb-5 opacity-75">Bienvenido a nuestro refugio de gatitos, nos alegra verte.</p>
+        
+        <div class="d-inline-block">
+            <div class="d-flex gap-3 justify-content-end align-items-center">
+                
+                <a href="" class="btn btn-outline-dark btn-lg px-4 rounded-pill">
+                    Registro Trabajador
+                </a>
+
+                <a href="" class="btn btn-dark btn-lg px-5 rounded-pill">
+                    Iniciar Sesión
+                </a>
+
+            </div>
+
+            <div class="mt-4 opacity-50">
+                <a href="#" class="btn btn-link text-decoration-none text-secondary btn-sm disabled">
+                    Entrar como Visitante (desactivado por ahora)
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

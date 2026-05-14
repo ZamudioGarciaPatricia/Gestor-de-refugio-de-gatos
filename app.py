@@ -5,11 +5,11 @@ from passlib.hash import pbkdf2_sha256
 app = Flask(__name__)
 app.secret_key = 'gatitoss'
 
-gestor_obj = gestor.GestorTareas("mongodb://127.0.0.1:27017/")
+gestor_obj = gestor.GestorTareas("mongodb+srv://ZamudioGarcia:MIAU@cluster0.uyly6pn.mongodb.net/?appName=Cluster0")
 
 @app.route('/')
 def home():
-    return render_template('inicio.html')
+    return render_template('pantallainicial.html')
 
 @app.route('/creacuenta', methods=['GET', 'POST'])
 def creacuenta():
@@ -37,11 +37,11 @@ def iniciasesion():
         user = gestor_obj.obtener_usuario(e)
 
         if user and pbkdf2_sha256.verify(s, user['secreto']):
-            return redirect(url_for('tareas'))
+            return redirect(url_for('pantallainicial.html'))
         else:
             flash('datos incorrectos.')
             
-    return render_template('exito.html')
+    return render_template('ash.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
