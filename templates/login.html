@@ -8,7 +8,6 @@
         <div class="col-md-4">
             <h2 class="display-6 fw-bold mb-4 text-center">Entrar</h2>
 
-            <!-- El action apunta a la función iniciasesion de tu app.py -->
             <form action="{{ url_for('iniciasesion') }}" method="POST">
                 <div class="mb-3">
                     <label class="form-label small text-muted opacity-75">Usuario</label>
@@ -22,7 +21,7 @@
             </form>
             
             <div class="text-center mt-3">
-                <a href="{{ url_for('creacuenta') }}" class="btn btn-link btn-sm text-decoration-none text-secondary opacity-50">¿No tienes cuenta? Crea una</a>
+                <a href="{{ url_for('recuperar') }}" class="btn btn-link btn-sm text-decoration-none text-secondary opacity-50">¿Olvidaste tu contraseña?</a>
             </div>
         </div>
     </div>

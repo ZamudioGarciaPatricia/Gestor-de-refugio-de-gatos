@@ -88,7 +88,7 @@ def recuperar():
             msg.body = f'''Para restablecer tu contraseña, haz clic en el siguiente enlace:
 {enlace}
 
-Este enlace expirará en 15 minutos. Si no solicitaste esto, ignora este correo.'''
+Este enlace expirará en 10 minutos. Si no solicitaste esto, ignora este correo.'''
             
             try:
                 mail.send(msg)
