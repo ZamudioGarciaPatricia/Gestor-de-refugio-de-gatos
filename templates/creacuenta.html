@@ -11,22 +11,29 @@
             <form action="{{ url_for('creacuenta') }}" method="POST">
                 <div class="mb-3">
                     <label class="form-label small text-muted opacity-75">Nombre Completo</label>
-                    <!-- name="nombre completo" coincide con tu app.py -->
-                    <input type="text" name="nombre completo" class="form-control rounded-pill border-light-subtle shadow-none" required>
+                    <input type="text" name="nombre_completo" class="form-control rounded-pill border-light-subtle shadow-none" required>
                 </div>
+                
                 <div class="mb-3">
                     <label class="form-label small text-muted opacity-75">Nombre de Usuario</label>
                     <input type="text" name="user" class="form-control rounded-pill border-light-subtle shadow-none" required>
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label small text-muted opacity-75">Correo Electrónico</label>
+                    <input type="email" name="email" class="form-control rounded-pill border-light-subtle shadow-none" required>
+                </div>
+
                 <div class="mb-4">
                     <label class="form-label small text-muted opacity-75">Contraseña</label>
                     <input type="password" name="secreto" class="form-control rounded-pill border-light-subtle shadow-none" required>
                 </div>
+                
                 <button type="submit" class="btn btn-outline-dark w-100 rounded-pill">Crear mi cuenta</button>
             </form>
 
             <div class="text-center mt-3">
-                <a href="{{ url_for('iniciasesion') }}" class="btn btn-link btn-sm text-decoration-none text-secondary opacity-50">Ya tengo cuenta</a>
+                <a href="{{ url_for('log') }}" class="btn btn-link btn-sm text-decoration-none text-secondary opacity-50">Ya tengo cuenta</a>
             </div>
         </div>
     </div>
