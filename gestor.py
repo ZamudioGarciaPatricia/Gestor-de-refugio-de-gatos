@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from bson.objectid import ObjectId 
 
 class GestorTareas:
     def __init__(self, uri):
@@ -54,3 +55,24 @@ class GestorTareas:
         except Exception as e:
             print(f"Error al obtener gatos: {e}")
             return []
+        
+
+
+
+    def obtener_gato_por_id(self, gato_id):
+        try:
+            return self.gatos.find_one({"_id": ObjectId(gato_id)})
+        except Exception as e:
+            print(f"Error al obtener gato por ID: {e}")
+            return None
+
+    def actualizar_gato(self, gato_id, datos_actualizados):
+        try:
+            resultado = self.gatos.update_one(
+                {"_id": ObjectId(gato_id)},
+                {"$set": datos_actualizados}
+            )
+            return resultado.modified_count > 0
+        except Exception as e:
+            print(f"Error al actualizar gato: {e}")
+            return False
