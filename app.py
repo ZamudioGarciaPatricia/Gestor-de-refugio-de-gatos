@@ -4,6 +4,8 @@ from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
 import gestor
 from passlib.hash import pbkdf2_sha256
+from bson.objectid import ObjectId
+
 
 app = Flask(__name__)
 app.secret_key = 'gatitoss'
@@ -21,12 +23,80 @@ app.config['MAIL_DEFAULT_SENDER'] = 'refugiodegatitosrecupera@gmail.com'
 mail = Mail(app)
 serializer = URLSafeTimedSerializer(app.config['SECRET_KEY_TOKENS'])
 
-gestor_obj = gestor.GestorTareas("mongodb+srv://ZamudioGarcia:MIAU@cluster0.uyly6pn.mongodb.net/?appName=Cluster0")
+gestor_obj = gestor.GestorTareas("mongodb+srv://ZGpatricia:REFUGIO@clusterpzg.3drzl88.mongodb.net/?appName=ClusterPZG")
 
 
 @app.route('/')
 def home():
     return render_template('pantallainicial.html')
+
+@app.route('/admin')
+def admin():
+    lista_de_gatos = gestor_obj.obtener_gatos()
+    return render_template('admin.html', gatos=lista_de_gatos)
+
+
+@app.route('/guardar-gato', methods=['POST'])
+def guardar_gato():
+    datos_nuevo_gato = {
+        "nombre": request.form.get('nombre'),
+        "raza": request.form.get('raza'),
+        "edad": request.form.get('edad'),
+        "sexo": request.form.get('sexo'),
+        "esterilizado": request.form.get('esterilizado'),
+        "estado": request.form.get('estado'),
+        "estado_salud": request.form.get('estado_salud'),
+        "enfermedades": request.form.get('enfermedades'),
+        "es_cronica": request.form.get('es_cronica'),
+        "caracter": request.form.get('caracter'),
+        "aspecto": request.form.get('aspecto'),
+        "trato_cuidador": request.form.get('trato_cuidador'),
+        "descripcion": request.form.get('descripcion')
+    }
+    
+    gestor_obj.guardar_gato(datos_nuevo_gato)
+    
+    flash('¡Gatito registrado exitosamente!')
+    
+    return redirect(url_for('admin'))
+
+@app.route('/editar/<id_gato>', methods=['GET'])
+def editar_gato(id_gato):
+    gato_seleccionado = gestor_obj.obtener_gato_por_id(id_gato)
+    
+    if gato_seleccionado:
+        return render_template('editar.html', gato=gato_seleccionado)
+    else:
+        flash('El gatito no fue encontrado.')
+        return redirect(url_for('admin'))
+
+
+@app.route('/actualizar-gato/<id_gato>', methods=['POST'])
+def actualizar_gato_proceso(id_gato):
+    datos_modificados = {
+        "nombre": request.form.get('nombre'),
+        "raza": request.form.get('raza'),
+        "edad": request.form.get('edad'),
+        "sexo": request.form.get('sexo'),
+        "esterilizado": request.form.get('esterilizado'),
+        "estado": request.form.get('estado'),
+        "estado_salud": request.form.get('estado_salud'),
+        "enfermedades": request.form.get('enfermedades'),
+        "es_cronica": request.form.get('es_cronica'),
+        "caracter": request.form.get('caracter'),
+        "aspecto": request.form.get('aspecto'),
+        "trato_cuidador": request.form.get('trato_cuidador'),
+        "descripcion": request.form.get('descripcion')
+    }
+    
+    gestor_obj.actualizar_gato(id_gato, datos_modificados)
+    
+    flash('¡La información del gatito se ha actualizado!')
+    return redirect(url_for('admin'))
+
+@app.route('/visitante')
+def visitante():
+    return render_template('visitante.html')
 
 
 @app.route('/crea')
@@ -67,7 +137,7 @@ def iniciasesion():
         user = gestor_obj.obtener_usuario(e)
 
         if user and pbkdf2_sha256.verify(s, user['secreto']):
-            return redirect(url_for('home')) 
+            return redirect(url_for('admin')) 
         else:
             flash('Datos incorrectos.')
             

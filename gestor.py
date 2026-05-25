@@ -5,11 +5,11 @@ class GestorTareas:
         self.client = MongoClient(uri)
         self.db = self.client['sistema_tareas']
         self.usuarios = self.db['usuarios']
+        self.gatos = self.db['gatos']
 
     def crear_usuario(self, usuario, nombre_completo, email, password_encriptada):
         if self.usuarios.find_one({"user": usuario}) or self.usuarios.find_one({"email": email}):
             return False
-        
         self.usuarios.insert_one({
             "user": usuario,
             "nombre_completo": nombre_completo,
@@ -38,3 +38,19 @@ class GestorTareas:
         except Exception as e:
             print(f"Error al actualizar la contraseña: {e}")
             return False
+
+    
+    def guardar_gato(self, datos_gato):
+        try:
+            self.gatos.insert_one(datos_gato)
+            return True
+        except Exception as e:
+            print(f"Error al guardar gato: {e}")
+            return False
+
+    def obtener_gatos(self):
+        try:
+            return list(self.gatos.find())
+        except Exception as e:
+            print(f"Error al obtener gatos: {e}")
+            return []

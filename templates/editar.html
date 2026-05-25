@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %} Editar Información - {{ gato.nombre }} {% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-column align-items-start mb-4 p-4 bg-white rounded-4 border border-light-subtle">
+    <h1 class="fw-bold m-0 text-dark">Modificar Datos de {{ gato.nombre }}</h1>
+    <p class="text-secondary opacity-75 m-0">Cambia los campos necesarios y presiona guardar para actualizar el sistema.</p>
+</div>
+
+<div class="p-4 mb-5 bg-white rounded-4 border border-light-subtle">
+    
+    <form action="/actualizar-gato/{{ gato._id }}" method="POST" class="d-flex flex-column gap-4">
+        
+        <div class="bg-light p-3 rounded-3 border border-secondary-subtle">
+            <p class="text-black-50 fw-bold small text-uppercase mb-3">Datos Básicos</p>
+            <div class="row g-3">
+                <div class="col-12 col-md-4">
+                    <label class="form-label text-dark opacity-75 small fw-medium">Nombre</label>
+                    <input type="text" name="nombre" class="form-control rounded-3 border-secondary-subtle" value="{{ gato.nombre }}" required>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label text-dark opacity-75 small fw-medium">Raza</label>
+                    <input type="text" name="raza" class="form-control rounded-3 border-secondary-subtle" value="{{ gato.raza }}" required>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label text-dark opacity-75 small fw-medium">Edad</label>
+                    <input type="text" name="edad" class="form-control rounded-3 border-secondary-subtle" value="{{ gato.edad }}" required>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label text-dark opacity-75 small fw-medium">Sexo</label>
+                    <select name="sexo" class="form-select rounded-3 border-secondary-subtle" required>
+                        <option value="Macho" {% if gato.sexo == 'Macho' %}selected{% endif %}>Macho</option>
+                        <option value="Hembra" {% if gato.sexo == 'Hembra' %}selected{% endif %}>Hembra</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label text-dark opacity-75 small fw-medium">¿Está Esterilizado?</label>
+                    <select name="esterilizado" class="form-select rounded-3 border-secondary-subtle" required>
+                        <option value="Sí" {% if gato.esterilizado == 'Sí' %}selected{% endif %}>Sí</option>
+                        <option value="No" {% if gato.esterilizado == 'No' %}selected{% endif %}>No</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label text-dark opacity-75 small fw-medium">Estado del Gato</label>
+                    <select name="estado" class="form-select rounded-3 border-secondary-subtle" required>
+                        <option value="En el refugio" {% if gato.estado == 'En el refugio' %}selected{% endif %}>En el refugio</option>
+                        <option value="En adopción temporal" {% if gato.estado == 'En adopción temporal' %}selected{% endif %}>En adopción temporal</option>
+                        <option value="Rescatado" {% if gato.estado == 'Rescatado' %}selected{% endif %}>Rescatado</option>
+                        <option value="Adoptado" {% if gato.estado == 'Adoptado' %}selected{% endif %}>Adoptado</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-secondary-subtle p-3 rounded-3 border border-secondary-subtle">
+            <p class="text-black-50 fw-bold small text-uppercase mb-3">Salud y Diagnóstico</p>
+            <div class="row g-3">
+                <div class="col-12 col-md-4">
+                    <label class="form-label text-dark opacity-75 small fw-medium">Estado de Salud</label>
+                    <input type="text" name="estado_salud" class="form-control rounded-3 border-secondary-subtle" value="{{ gato.estado_salud }}" required>
+                </div>
+                <div class="col-12 col-md-5">
+                    <label class="form-label text-dark opacity-75 small fw-medium">Enfermedades conocidas</label>
+                    <input type="text" name="enfermedades" class="form-control rounded-3 border-secondary-subtle" value="{{ gato.enfermedades }}">
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label text-dark opacity-75 small fw-medium">¿Es crónica?</label>
+                    <select name="es_cronica" class="form-select rounded-3 border-secondary-subtle" required>
+                        <option value="No aplica" {% if gato.es_cronica == 'No aplica' %}selected{% endif %}>No aplica</option>
+                        <option value="Sí" {% if gato.es_cronica == 'Sí' %}selected{% endif %}>Sí</option>
+                        <option value="No" {% if gato.es_cronica == 'No' %}selected{% endif %}>No</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-light p-3 rounded-3 border border-secondary-subtle">
+            <p class="text-black-50 fw-bold small text-uppercase mb-3">Características y Comportamiento</p>
+            <div class="row g-3">
+                <div class="col-12 col-md-4">
+                    <label class="form-label text-dark opacity-75 small fw-medium">Carácter del gato</label>
+                    <input type="text" name="caracter" class="form-control rounded-3 border-secondary-subtle" value="{{ gato.caracter }}" required>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label text-dark opacity-75 small fw-medium">Aspecto visual</label>
+                    <input type="text" name="aspecto" class="form-control rounded-3 border-secondary-subtle" value="{{ gato.aspecto }}" required>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label text-dark opacity-75 small fw-medium">Nombre y trato del cuidador asignado</label>
+                    <input type="text" name="trato_cuidador" class="form-control rounded-3 border-secondary-subtle" value="{{ gato.trato_cuidador }}" required>
+                </div>
+                <div class="col-12">
+                    <label class="form-label text-dark opacity-75 small fw-medium">Características principales (Breve descripción)</label>
+                    <textarea name="descripcion" class="form-control rounded-3 border-secondary-subtle" rows="3" required>{{ gato.descripcion }}</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-3 mt-2">
+            <a href="/admin" class="btn btn-outline-dark btn-lg px-4 rounded-3 fw-medium">Cancelar</a>
+            <button type="submit" class="btn btn-dark btn-lg px-5 rounded-3 fw-medium">Actualizar Cambios</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
