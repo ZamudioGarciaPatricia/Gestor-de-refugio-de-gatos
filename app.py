@@ -59,6 +59,14 @@ def guardar_gato():
     flash('¡Gatito registrado exitosamente!')
     
     return redirect(url_for('admin'))
+def eliminar_gato(self, gato_id):
+        try:
+            from bson.objectid import ObjectId #
+            resultado = self.gatos.delete_one({"_id": ObjectId(gato_id)})
+            return resultado.deleted_count > 0
+        except Exception as e:
+            print(f"Error al eliminar gato: {e}")
+            return False
 
 @app.route('/editar/<id_gato>', methods=['GET'])
 def editar_gato(id_gato):
@@ -69,6 +77,8 @@ def editar_gato(id_gato):
     else:
         flash('El gatito no fue encontrado.')
         return redirect(url_for('admin'))
+    
+
 
 
 @app.route('/actualizar-gato/<id_gato>', methods=['POST'])
