@@ -43,7 +43,6 @@ class GestorTareas:
     def eliminar_gato(self, gato_id):
         """Elimina un gato de la base de datos usando su ID único"""
         try:
-            from bson.objectid import ObjectId # Por si acaso no lo habías importado aquí
             resultado = self.gatos.delete_one({"_id": ObjectId(gato_id)})
             return resultado.deleted_count > 0
         except Exception as e:
@@ -64,9 +63,6 @@ class GestorTareas:
         except Exception as e:
             print(f"Error al obtener gatos: {e}")
             return []
-        
-
-
 
     def obtener_gato_por_id(self, gato_id):
         try:

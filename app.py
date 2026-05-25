@@ -1,11 +1,9 @@
-
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
 import gestor
 from passlib.hash import pbkdf2_sha256
 from bson.objectid import ObjectId
-
 
 app = Flask(__name__)
 app.secret_key = 'gatitoss'
@@ -18,7 +16,6 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'refugiodegatitosrecupera@gmail.com' 
 app.config['MAIL_PASSWORD'] = 'lmbv wquc jiuh stay'
 app.config['MAIL_DEFAULT_SENDER'] = 'refugiodegatitosrecupera@gmail.com'
-
 
 mail = Mail(app)
 serializer = URLSafeTimedSerializer(app.config['SECRET_KEY_TOKENS'])
@@ -55,18 +52,19 @@ def guardar_gato():
     }
     
     gestor_obj.guardar_gato(datos_nuevo_gato)
-    
     flash('¡Gatito registrado exitosamente!')
-    
     return redirect(url_for('admin'))
-def eliminar_gato(self, gato_id):
-        try:
-            from bson.objectid import ObjectId #
-            resultado = self.gatos.delete_one({"_id": ObjectId(gato_id)})
-            return resultado.deleted_count > 0
-        except Exception as e:
-            print(f"Error al eliminar gato: {e}")
-            return False
+
+
+@app.route('/eliminar-gato/<id_gato>', methods=['GET', 'POST'])
+def eliminar_gato_ruta(id_gato):
+    exito = gestor_obj.eliminar_gato(id_gato)
+    if exito:
+        flash('¡El gatito ha sido eliminado correctamente!')
+    else:
+        flash('No se pudo eliminar al gatito o no fue encontrado.')
+    return redirect(url_for('admin'))
+
 
 @app.route('/editar/<id_gato>', methods=['GET'])
 def editar_gato(id_gato):
@@ -77,8 +75,6 @@ def editar_gato(id_gato):
     else:
         flash('El gatito no fue encontrado.')
         return redirect(url_for('admin'))
-    
-
 
 
 @app.route('/actualizar-gato/<id_gato>', methods=['POST'])
@@ -100,14 +96,13 @@ def actualizar_gato_proceso(id_gato):
     }
     
     gestor_obj.actualizar_gato(id_gato, datos_modificados)
-    
     flash('¡La información del gatito se ha actualizado!')
     return redirect(url_for('admin'))
+
 
 @app.route('/visitante')
 def visitante():
     nombre_buscado = request.args.get('buscar_nombre')
-    
     if nombre_buscado:
         query = {"nombre": {"$regex": nombre_buscado, "$options": "i"}}
         lista_de_gatos = list(gestor_obj.gatos.find(query))
@@ -170,7 +165,7 @@ def recuperar():
         
         if user:
             token = serializer.dumps(correo, salt='recuperar-password-salt')
-            enlace = url_for('restablecer_con_token', token=token, _external=True)
+            enlace = url_for('restablecer_con_token_ruta', token=token, _external=True)
             
             msg = Message('Restablecer Contraseña - Sistema Tareas', recipients=[correo])
             msg.body = f'''Para restablecer tu contraseña, haz clic en el siguiente enlace:
@@ -192,7 +187,7 @@ Este enlace expirará en 10 minutos. Si no solicitaste esto, ignora este correo.
 
 
 @app.route('/restablecer/<token>', methods=['GET', 'POST'])
-def restablecer_con_token(token):
+def restablecer_con_token_ruta(token):
     try:
         correo = serializer.loads(token, salt='recuperar-password-salt', max_age=600)
     except SignatureExpired:

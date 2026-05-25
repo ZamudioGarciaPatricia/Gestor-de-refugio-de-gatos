@@ -1,157 +1,148 @@
 {% extends 'base.html' %}
 
-{% block title %} Panel de Administración - Refugio de gatitos {% endblock %}
+{% block title %} Panel de Administración {% endblock %}
 
 {% block content %}
-<img src="/static/banner.jpg" class="img-fluid" alt="...">
+<div class="container py-4">
 
-<div id="agregar-gatito" class="p-4 mb-5 bg-white rounded-4 border border-light-subtle">
-    <div class="d-flex align-items-center mb-4 pb-2 border-bottom border-secondary-subtle opacity-75">
-        <h2 class="h4 fw-semibold m-0 text-dark">Registrar un nuevo gatito 🐾</h2>
+    <div class="mb-4">
+        <h1 class="fw-bold text-dark">PANEL DE ADMINISTRACIÓN</h1>
+        <p class="text-secondary opacity-75">Agrega nuevos felinos o gestiona los registros existentes.</p>
     </div>
-    
-    <form action="/guardar-gato" method="POST" class="d-flex flex-column gap-4">
+
+    <div class="p-4 mb-5 bg-white rounded-4 border border-light-subtle">
+        <h2 class="h4 fw-bold mb-4 text-dark text-uppercase">Registrar un nuevo gatito 🐾</h2>
         
-        <div class="bg-light p-3 rounded-3 border border-secondary-subtle">
-            <p class="text-black-50 fw-bold small text-uppercase mb-3">Datos Básicos</p>
-            <div class="row g-3">
-                <div class="col-12 col-md-4">
-                    <label class="form-label text-dark opacity-75 small fw-medium">Nombre</label>
-                    <input type="text" name="nombre" class="form-control rounded-3 border-secondary-subtle" placeholder="Ej. Lucas" required>
-                </div>
-                <div class="col-12 col-md-4">
-                    <label class="form-label text-dark opacity-75 small fw-medium">Raza</label>
-                    <input type="text" name="raza" class="form-control rounded-3 border-secondary-subtle" placeholder="Ej. Mestizo, Siamés" required>
-                </div>
-                <div class="col-12 col-md-4">
-                    <label class="form-label text-dark opacity-75 small fw-medium">Edad</label>
-                    <input type="text" name="edad" class="form-control rounded-3 border-secondary-subtle" placeholder="Ej. 2 años" required>
-                </div>
-                <div class="col-12 col-md-4">
-                    <label class="form-label text-dark opacity-75 small fw-medium">Sexo</label>
-                    <select name="sexo" class="form-select rounded-3 border-secondary-subtle" required>
-                        <option value="" disabled selected>Selecciona...</option>
-                        <option value="Macho">Macho</option>
-                        <option value="Hembra">Hembra</option>
-                    </select>
-                </div>
-                <div class="col-12 col-md-4">
-                    <label class="form-label text-dark opacity-75 small fw-medium">¿Está Esterilizado?</label>
-                    <select name="esterilizado" class="form-select rounded-3 border-secondary-subtle" required>
-                        <option value="" disabled selected>Selecciona...</option>
-                        <option value="Sí">Sí</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
-                <div class="col-12 col-md-4">
-                    <label class="form-label text-dark opacity-75 small fw-medium">Estado del Gato</label>
-                    <select name="estado" class="form-select rounded-3 border-secondary-subtle" required>
-                        <option value="" disabled selected>Selecciona...</option>
-                        <option value="En el refugio">En el refugio</option>
-                        <option value="En adopción temporal">En adopción temporal</option>
-                        <option value="Rescatado">Rescatado</option>
-                        <option value="Adoptado">Adoptado</option>
-                    </select>
-                </div>
+        <form action="/guardar-gato" method="POST" class="d-flex flex-column gap-3">
+            
+            <div>
+                <label class="form-label small fw-medium text-secondary">Nombre del gato</label>
+                <input type="text" name="nombre" class="form-control rounded-3" placeholder="Ej. Panquecito" required>
             </div>
-        </div>
 
-        <div class="bg-secondary-subtle p-3 rounded-3 border border-secondary-subtle">
-            <p class="text-black-50 fw-bold small text-uppercase mb-3">Salud y Diagnóstico</p>
-            <div class="row g-3">
-                <div class="col-12 col-md-4">
-                    <label class="form-label text-dark opacity-75 small fw-medium">Estado de Salud</label>
-                    <input type="text" name="estado_salud" class="form-control rounded-3 border-secondary-subtle" placeholder="Ej. Excelente, En tratamiento" required>
-                </div>
-                <div class="col-12 col-md-5">
-                    <label class="form-label text-dark opacity-75 small fw-medium">Enfermedades conocidas</label>
-                    <input type="text" name="enfermedades" class="form-control rounded-3 border-secondary-subtle" placeholder="Ninguna / Describir">
-                </div>
-                <div class="col-12 col-md-3">
-                    <label class="form-label text-dark opacity-75 small fw-medium">¿Es crónica?</label>
-                    <select name="es_cronica" class="form-select rounded-3 border-secondary-subtle" required>
-                        <option value="No aplica" selected>No aplica</option>
-                        <option value="Sí">Sí</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
+            <div>
+                <label class="form-label small fw-medium text-secondary">Raza</label>
+                <input type="text" name="raza" class="form-control rounded-3" placeholder="Ej. Mestizo" required>
             </div>
-        </div>
 
-        <div class="bg-light p-3 rounded-3 border border-secondary-subtle">
-            <p class="text-black-50 fw-bold small text-uppercase mb-3">Características y Comportamiento</p>
-            <div class="row g-3">
-                <div class="col-12 col-md-4">
-                    <label class="form-label text-dark opacity-75 small fw-medium">Carácter del gato</label>
-                    <input type="text" name="caracter" class="form-control rounded-3 border-secondary-subtle" placeholder="Ej. Juguetón, Miedoso" required>
-                </div>
-                <div class="col-12 col-md-4">
-                    <label class="form-label text-dark opacity-75 small fw-medium">Aspecto visual</label>
-                    <input type="text" name="aspecto" class="form-control rounded-3 border-secondary-subtle" placeholder="Ej. Atigrado gris, Ojos verdes" required>
-                </div>
-                <div class="col-12 col-md-4">
-                    <label class="form-label text-dark opacity-75 small fw-medium">Nombre y trato del cuidador asignado</label>
-                    <input type="text" name="trato_cuidador" class="form-control rounded-3 border-secondary-subtle" placeholder="Ej. Carlos - Trato cariñoso" required>
-                </div>
-                <div class="col-12">
-                    <label class="form-label text-dark opacity-75 small fw-medium">Características principales (Breve descripción)</label>
-                    <textarea name="descripcion" class="form-control rounded-3 border-secondary-subtle" rows="3" placeholder="Describe brevemente su historia o rasgos especiales..." required></textarea>
-                </div>
+            <div>
+                <label class="form-label small fw-medium text-secondary">Edad</label>
+                <input type="text" name="edad" class="form-control rounded-3" placeholder="Ej. 3 años" required>
             </div>
-        </div>
 
-        <div class="d-flex justify-content-end mt-2">
-            <button type="submit" class="btn btn-dark btn-lg px-5 rounded-3 fw-medium">Guardar BD CATS</button>
-        </div>
-    </form>
-</div>
+            <div>
+                <label class="form-label small fw-medium text-secondary">Sexo</label>
+                <select name="sexo" class="form-select rounded-3" required>
+                    <option value="" disabled selected>Selecciona una opción...</option>
+                    <option value="Macho">Macho</option>
+                    <option value="Hembra">Hembra</option>
+                </select>
+            </div>
 
-<div id="lista-gatitos" class="p-4 bg-white rounded-4 border border-light-subtle">
-    <div class="d-flex align-items-center mb-4 pb-2 border-bottom border-secondary-subtle opacity-75">
-        <h2 class="h4 fw-semibold m-0 text-dark">Gatitos Registrados en este momento</h2>
+            <div>
+                <label class="form-label small fw-medium text-secondary">¿Está Esterilizado?</label>
+                <select name="esterilizado" class="form-select rounded-3" required>
+                    <option value="" disabled selected>Selecciona una opción...</option>
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="form-label small fw-medium text-secondary">Estado actual</label>
+                <select name="estado" class="form-select rounded-3" required>
+                    <option value="" disabled selected>Selecciona una opción...</option>
+                    <option value="En el refugio">En el refugio</option>
+                    <option value="En adopción temporal">En adopción temporal</option>
+                    <option value="Rescatado">Rescatado</option>
+                    <option value="Adoptado">Adoptado</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="form-label small fw-medium text-secondary">Estado de Salud</label>
+                <input type="text" name="estado_salud" class="form-control rounded-3" placeholder="Ej. Excelente" required>
+            </div>
+
+            <div>
+                <label class="form-label small fw-medium text-secondary">Enfermedades conocidas</label>
+                <input type="text" name="enfermedades" class="form-control rounded-3" placeholder="Ninguna / Describir">
+            </div>
+
+            <div>
+                <label class="form-label small fw-medium text-secondary">¿Es crónica?</label>
+                <select name="es_cronica" class="form-select rounded-3" required>
+                    <option value="No aplica">No aplica</option>
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="form-label small fw-medium text-secondary">Carácter del gato</label>
+                <input type="text" name="caracter" class="form-control rounded-3" placeholder="Ej. Juguetón" required>
+            </div>
+
+            <div>
+                <label class="form-label small fw-medium text-secondary">Aspecto visual</label>
+                <input type="text" name="aspecto" class="form-control rounded-3" placeholder="Ej. Atigrado gris" required>
+            </div>
+
+            <div>
+                <label class="form-label small fw-medium text-secondary">Cuidador asignado</label>
+                <input type="text" name="trato_cuidador" class="form-control rounded-3" placeholder="Ej. Carlos" required>
+            </div>
+
+            <div>
+                <label class="form-label small fw-medium text-secondary">Breve descripción / Historia</label>
+                <textarea name="descripcion" class="form-control rounded-3" rows="3" placeholder="Escribe aquí su historia..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-dark btn-lg w-100 rounded-pill mt-2">Guardar Gatito</button>
+        </form>
     </div>
 
-    <div class="table-responsive rounded-3 border border-secondary-subtle">
-        <table class="table align-middle m-0 table-hover">
-            <thead class="table-secondary opacity-75 text-uppercase small">
+    <hr class="border-secondary-subtle opacity-50 my-4">
+
+    <div class="p-4 bg-white rounded-4 border border-light-subtle">
+        <h2 class="h4 fw-bold mb-4 text-dark text-uppercase">Lista de Registros</h2>
+
+        <table class="table align-middle">
+            <thead class="table-light text-uppercase small">
                 <tr>
-                    <th class="p-3 text-dark">Nombre</th>
-                    <th class="p-3 text-dark">Raza / Edad</th>
-                    <th class="p-3 text-dark">Estado</th>
-                    <th class="p-3 text-dark">Salud</th>
-                    <th class="p-3 text-dark">Cuidador</th>
-                    <th class="p-3 text-center text-dark">Acción</th>
+                    <th>Nombre</th>
+                    <th>Estado</th>
+                    <th>Salud</th>
+                    <th class="text-center">Acciones</th>
                 </tr>
             </thead>
             <tbody class="small">
                 {% for gato in gatos %}
-                <tr class="border-bottom border-light-subtle">
-                    <td class="p-3 fw-bold text-dark">{{ gato.nombre }} <span class="text-black-50 fw-normal">({{ gato.sexo }})</span></td>
-                    <td class="p-3 text-secondary">{{ gato.raza }} <br> <span class="text-black-50 opacity-75">{{ gato.edad }}</span></td>
-                    <td class="p-3">
-                        <span class="badge rounded-2 px-2 py-1 bg-secondary-subtle text-dark border border-secondary">
+                <tr>
+                    <td class="fw-bold text-dark">{{ gato.nombre }}</td>
+                    <td>
+                        <span class="badge rounded-pill bg-secondary-subtle text-dark border border-secondary px-3 py-2 opacity-75">
                             {{ gato.estado }}
                         </span>
                     </td>
-                    <td class="p-3 text-secondary">
-                        <span class="fw-medium">{{ gato.estado_salud }}</span>
-                        {% if gato.enfermedades and gato.enfermedades != 'Ninguna' and gato.enfermedades != 'ninguna' %}
-                            <br><span> {{ gato.enfermedades }}</span>
-                        {% endif %}
-                    </td>
-                    <td class="p-3 text-secondary">{{ gato.trato_cuidador }}</td>
-                    <td class="p-3 text-center">
-                        <a href="/editar/{{ gato._id }}" class="btn btn-sm btn-outline-dark rounded-2 px-3">Edita la informacion.</a>
+                    <td class="text-secondary">{{ gato.gato_salud or gato.estado_salud }}</td>
+                    
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="/editar/{{ gato._id }}" class="btn btn-sm btn-outline-dark rounded-pill px-3">Editar</a>
+                            <a href="/eliminar-gato/{{ gato._id }}" class="btn btn-sm btn-outline-danger rounded-pill px-3">Eliminar</a>
+                        </div>
                     </td>
                 </tr>
                 {% else %}
                 <tr>
-                    <td colspan="6" class="p-4 text-center text-black-50 italic">No hay gatitos registrados en la base de datos todavía.</td>
+                    <td colspan="4" class="text-center text-muted py-4">No hay gatitos en la lista.</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-</div>
 
+</div>
 {% endblock %}
+
