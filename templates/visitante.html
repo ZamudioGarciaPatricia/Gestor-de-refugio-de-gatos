@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %} Catálogo de Gatitos {% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <div class="text-center mb-4">
+        <img src="/static/banner.jpg" alt="Banner Refugio" class="w-100 rounded-4" style="height: 180px; object-fit: cover;">
+    </div>
+
+    <div class="mb-4">
+        <h1 class="display-4 fw-bold text-dark">NUESTROS GATITOS</h1>
+        <p class="text-muted opacity-75">Busca a tu compañero ideal por su nombre.</p>
+        
+        <form action="/visitante" method="GET" class="d-flex gap-2">
+            <input type="text" name="buscar_nombre" class="form-control rounded-pill px-3" placeholder="Escribe el nombre aquí..." value="{{ busqueda or '' }}">
+            <button type="submit" class="btn btn-dark rounded-pill px-4">Buscar</button>
+            {% if busqueda %}
+                <a href="/visitante" class="btn btn-outline-secondary rounded-pill d-flex align-items-center px-3">Ver todos</a>
+            {% endif %}
+        </form>
+    </div>
+
+    <hr class="border-secondary-subtle opacity-50 my-4">
+
+    <div class="d-flex flex-column gap-3 mb-5">
+        {% for gato in gatos %}
+        <div class="p-4 bg-white rounded-4 border border-light-subtle">
+            
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h3 class="fw-bold m-0 text-uppercase">{{ gato.nombre }}</h3>
+                <span class="badge rounded-pill bg-secondary-subtle text-dark border border-secondary px-3 py-2 opacity-75">
+                    {{ gato.estado }}
+                </span>
+            </div>
+
+            <p class="text-secondary small mb-3">
+                <strong>Raza:</strong> {{ gato.raza }} | <strong>Edad:</strong> {{ gato.edad }}
+            </p>
+
+            <p class="text-dark opacity-75 mb-3">
+                {{ gato.descripcion }}
+            </p>
+
+            <button type="button" class="btn btn-outline-dark btn-sm rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#modal{{ gato._id }}">
+                Ver ficha médica y actualizaciones
+            </button>
+        </div>
+
+        <div class="modal fade" id="modal{{ gato._id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-4 p-3 border-0">
+                    
+                    <div class="modal-header border-0">
+                        <h2 class="modal-title fw-bold text-uppercase h4">{{ gato.nombre }}</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body d-flex flex-column gap-3">
+                        <div class="bg-light p-3 rounded-3 border border-secondary-subtle small">
+                            <p class="m-1"><strong>Sexo:</strong> {{ gato.sexo }}</p>
+                            <p class="m-1"><strong>¿Esterilizado?:</strong> {{ gato.esterilizado }}</p>
+                            <p class="m-1"><strong>Carácter:</strong> {{ gato.caracter }}</p>
+                            <p class="m-1"><strong>Aspecto:</strong> {{ gato.aspecto }}</p>
+                        </div>
+
+                        <div class="bg-secondary-subtle p-3 rounded-3 border border-secondary-subtle small opacity-75">
+                            <p class="m-1"><strong>Estado de Salud:</strong> {{ gato.estado_salud }}</p>
+                            <p class="m-1"><strong>Enfermedades:</strong> {{ gato.enfermedades or 'Ninguna' }}</p>
+                            <p class="m-1"><strong>¿Es Crónica?:</strong> {{ gato.es_cronica }}</p>
+                        </div>
+
+                        <p class="text-muted small italic m-0">Cuidador a cargo: {{ gato.trato_cuidador }}</p>
+                    </div>
+                    
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-dark rounded-pill px-4" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="p-4 text-center bg-white rounded-4 border border-light-subtle">
+            <p class="text-secondary opacity-50 m-0">No hay gatitos registrados con ese nombre.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <hr class="border-secondary-subtle opacity-50 my-4">
+
+    <div class="d-flex flex-column gap-3">
+        
+        <div>
+            <button class="btn btn-outline-dark btn-lg w-100 rounded-pill text-start px-4" type="button" data-bs-toggle="collapse" data-bs-target="#infoTemporal">
+                ¿Quieres ser un dueño temporal? <span class="float-end opacity-50 small">▼</span>
+            </button>
+            <div class="collapse" id="infoTemporal">
+                <div class="p-3 bg-light rounded-4 border border-secondary-subtle mt-2 small text-secondary">
+                    Le das un hogar a un gatito mientras encuentra su familia definitiva. Si te interesa, revisa nuestro contacto aquí abajo.
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <button class="btn btn-dark btn-lg w-100 rounded-pill text-start px-4" type="button" data-bs-toggle="collapse" data-bs-target="#infoContacto">
+                Contáctanos
+            </button>
+            <div class="collapse" id="infoContacto">
+                <div class="p-3 bg-white rounded-4 border border-light-subtle mt-2 small text-secondary">
+                    <p class="m-1"> <strong>Ubicación:</strong> Ciudad Juárez, Chihuahua, México</p>
+                    <p class="m-1"> <strong>Correo:</strong> refugiodegatitosrecupera@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

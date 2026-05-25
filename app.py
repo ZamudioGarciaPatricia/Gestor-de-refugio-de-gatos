@@ -96,7 +96,15 @@ def actualizar_gato_proceso(id_gato):
 
 @app.route('/visitante')
 def visitante():
-    return render_template('visitante.html')
+    nombre_buscado = request.args.get('buscar_nombre')
+    
+    if nombre_buscado:
+        query = {"nombre": {"$regex": nombre_buscado, "$options": "i"}}
+        lista_de_gatos = list(gestor_obj.gatos.find(query))
+    else:
+        lista_de_gatos = gestor_obj.obtener_gatos()
+        
+    return render_template('visitante.html', gatos=lista_de_gatos, busqueda=nombre_buscado)
 
 
 @app.route('/crea')
