@@ -3,27 +3,28 @@
 {% block title %} login {% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <h2 class="display-6 fw-bold mb-4 text-center">Entrar</h2>
+<div class="container p-5 my-5 bg-secondary bg-opacity-25 rounded border border-dark border-opacity-50 text-center" style="max-width: 600px;">
+    
+    <h1 class="display-4 fw-bold mb-5">Entrar</h1>
 
-            <form action="{{ url_for('iniciasesion') }}" method="POST">
-                <div class="mb-3">
-                    <label class="form-label small text-muted opacity-75">Usuario</label>
-                    <input type="text" name="user" class="form-control rounded-pill border-light-subtle shadow-none" required>
-                </div>
-                <div class="mb-4">
-                    <label class="form-label small text-muted opacity-75">Contraseña</label>
-                    <input type="password" name="secreto" class="form-control rounded-pill border-light-subtle shadow-none" required>
-                </div>
-                <button type="submit" class="btn btn-dark w-100 rounded-pill">Entrar</button>
-            </form>
-            
-            <div class="text-center mt-3">
-                <a href="{{ url_for('recuperar') }}" class="btn btn-link btn-sm text-decoration-none text-secondary opacity-50">¿Olvidaste tu contraseña?</a>
-            </div>
+    <form action="{{ url_for('iniciasesion') }}" method="POST" class="text-start">
+        
+        <div class="mb-4">
+            <label class="form-label display-6 fs-5 fw-semibold">Usuario</label>
+            <input type="text" name="user" class="form-control rounded display-6 fs-6" required>
         </div>
+        
+        <div class="mb-5">
+            <label class="form-label display-6 fs-5 fw-semibold">Contraseña</label>
+            <input type="password" name="secreto" class="form-control rounded display-6 fs-6" required>
+        </div>
+        
+        <button type="submit" class="btn btn-dark w-100 p-3 rounded fw-bold display-6 fs-5">Entrar</button>
+    </form>
+
+    <div class="mt-4">
+        <a href="{{ url_for('recuperar') }}" class="text-dark opacity-75 text-decoration-none display-6 fs-6">¿Olvidaste tu contraseña?</a>
     </div>
+
 </div>
 {% endblock %}
