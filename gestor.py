@@ -40,7 +40,15 @@ class GestorTareas:
             print(f"Error al actualizar la contraseña: {e}")
             return False
 
-    
+    def eliminar_gato(self, gato_id):
+        """Elimina un gato de la base de datos usando su ID único"""
+        try:
+            resultado = self.gatos.delete_one({"_id": ObjectId(gato_id)})
+            return resultado.deleted_count > 0
+        except Exception as e:
+            print(f"Error al eliminar gato: {e}")
+            return False
+        
     def guardar_gato(self, datos_gato):
         try:
             self.gatos.insert_one(datos_gato)
@@ -55,9 +63,6 @@ class GestorTareas:
         except Exception as e:
             print(f"Error al obtener gatos: {e}")
             return []
-        
-
-
 
     def obtener_gato_por_id(self, gato_id):
         try:
